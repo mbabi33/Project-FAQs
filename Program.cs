@@ -34,15 +34,12 @@ namespace Excel2CSV
                 for (int col = 1; col <= worksheet.Dimension.Columns; col++)
                 {
                     ExcelRange cell = worksheet.Cells[row, col];
-                    String value = (cell.Hyperlink == null) ? cell.Value.ToString() : cell.Hyperlink.ToString();
-                    if (col < worksheet.Dimension.Columns)
-                    {
-                        sb.Append('"' + value + '"' + ',');
-                    }
-                    else
-                    {
-                        sb.Append('"' + value + '"' + '\n');
-                    }
+                    String valueTxt = cell.Value.ToString();
+                    String valueNav = (cell.Hyperlink == null) ? "" : cell.Hyperlink.ToString();
+
+                    sb.Append('"' + valueTxt + '"' + ',' + '"' + valueNav + '"');
+
+                    if (col < worksheet.Dimension.Columns) sb.Append(','); else sb.Append('\n');
                 }
             }
 
